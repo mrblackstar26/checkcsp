@@ -1,18 +1,19 @@
-HTML Injection Vulnerability:
+Vulnerability: Session Not Terminated on Browser Close
 
 Description:
-HTML injection happens when an attacker manages to insert or “inject” malicious HTML code into a website. This usually occurs because the website doesn’t properly clean or validate user input. For example, if a site lets users submit comments or messages without checking for harmful code, an attacker could insert their own HTML. This malicious code could display fake content, steal data, or redirect users to harmful sites.
+
+The application fails to terminate an active session when the user closes the browser or a browser tab, leaving the session active in the background. As a result, reopening the browser allows any individual to access the application without re-authentication. This behavior indicates a lack of proper session management, where session cookies or tokens are not invalidated upon browser/tab closure.
 
 Impact:
 
-	•	Altered webpage content: Attackers can change the appearance of a webpage, making it show misleading or harmful information.
-	•	Phishing attacks: Malicious HTML can be used to create fake forms or login pages to steal sensitive information like usernames, passwords, or payment details.
-	•	Browser-based attacks: If attackers inject certain scripts or code, they can run harmful actions directly on a user’s browser, like stealing cookies, tracking user actions, or even executing harmful downloads.
+This vulnerability can lead to unauthorized access to sensitive information or system functionalities, especially in shared or public environments. If a user closes their browser without logging out and another person gains access to their system, the latter can reopen the browser and continue the session without needing to log in. This increases the risk of session hijacking and data breaches, violating confidentiality and integrity principles.
 
 Remediation:
 
-	•	Validate and sanitize input: Ensure all user input is checked and cleaned before being displayed on the website. This helps prevent attackers from injecting harmful code.
-	•	Escape special characters: Use HTML encoding or escaping to make sure characters like <, >, and " are treated as text and not executable code.
-	•	Content Security Policy (CSP): Implement a Content Security Policy to help prevent harmful scripts from running, even if they’re injected.
-	•	Use secure frameworks and libraries: Modern web frameworks often have built-in protections against HTML injection. Always use up-to-date and secure libraries to minimize risks.
-	•	Regular code reviews and testing: Continuously review and test your website for potential vulnerabilities to catch and fix issues before attackers can exploit them.
+	1.	Implement session termination on browser/tab close: Utilize JavaScript or other browser APIs to detect browser or tab closures and explicitly invalidate the session on the server side.
+	2.	Configure session timeouts: Implement short session inactivity timeouts to automatically log users out after a certain period of inactivity.
+	3.	Invalidate session cookies: Use secure, HttpOnly, and SameSite attributes for cookies, and ensure that cookies are set to expire or are destroyed on browser close.
+	4.	Encourage explicit logouts: Prompt users to log out explicitly rather than just closing the browser.
+	5.	Implement re-authentication on browser restart: Require the user to authenticate again when the browser is reopened.
+
+This detailed description, impact analysis, and remediation steps should help in creating a clear and concise vulnerability report aligned with OWASP standards.
