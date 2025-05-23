@@ -1,28 +1,18 @@
-package com.example.kafka;
+package com.example.kafkademo;
 
 import org.apache.kafka.clients.producer.*;
-import java.util.Properties;
+import java.util.*;
 
-public class KafkaProducerDemo {
-    public static void main(String[] args) {
-        String topic = "demo-topic";
-        String message = "Hello from Producer!";
-
+public class KafkaProducerWeb {
+    public static void send(String payload) {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(props)) {
-            ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
-            producer.send(record, (metadata, exception) -> {
-                if (exception == null) {
-                    System.out.printf("✅ Message sent to topic %s, partition %d, offset %d%n",
-                            metadata.topic(), metadata.partition(), metadata.offset());
-                } else {
-                    exception.printStackTrace();
-                }
-            });
+            ProducerRecord<String, String> record = new ProducerRecord<>("exploit-topic", payload);
+            producer.send(record);
         }
     }
 }
