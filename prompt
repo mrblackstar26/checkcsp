@@ -30,6 +30,24 @@ Rules:
 - Explicitly state when the origin cannot be determined
 - Perform step-by-step data-flow reasoning
 
+Perform argument origin (taint) analysis.
+
+Task:
+1. Identify whether each method argument is:
+   - User-controlled
+   - Derived from user input
+   - Server-side trusted
+2. Trace the argument backward across method calls and files
+3. Identify the original entry point (controller / request)
+4. Highlight where validation or sanitization occurs (if any)
+5. State assumptions clearly if full context is missing
+
+Sensitive sink to evaluate:
+- Database query
+- File system access
+- Command execution
+- Authentication / authorization decision
+
 
 
 
