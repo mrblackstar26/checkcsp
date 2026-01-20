@@ -19,4 +19,17 @@ For EACH vulnerability return:
 6. Exploitation scenario
 7. Secure fix (Java code)
 
-Respond in markdown format.
+Respond in You are reviewing a Java Spring Boot project.
+
+Project root: /src/main/java/com/company/app/
+
+Rules:
+- You may follow method calls across files
+- Assume standard Spring MVC request handling
+- Treat @RequestParam, @RequestBody, @PathVariable as USER-CONTROLLED
+- Explicitly state when the origin cannot be determined
+- Perform step-by-step data-flow reasoning
+
+
+
+
